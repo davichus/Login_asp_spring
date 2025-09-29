@@ -25,6 +25,7 @@ namespace Front_Login.Controllers
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest model)
         {
@@ -35,7 +36,19 @@ namespace Front_Login.Controllers
 
             var jsonContent = JsonConvert.SerializeObject(model);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("http://localhost:8080/api/login", content );
 
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var usuario = JsonConvert.DeserializeObject<Usuario>(jsonResponse);
+                if (usuario != null)
+                {
+                    HttpContext.Session.SetString("Usuario", JsonConvert.SerializeObject(usuario));
+                    return RedirectToAction("Index", "Home");
+                  
+                }
+            }
 
             return View("Index");
 

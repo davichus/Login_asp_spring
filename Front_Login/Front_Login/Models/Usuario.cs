@@ -8,7 +8,7 @@ namespace Front_Login.Models
         public int IdUsuario { get; set; }
         [JsonProperty("nombreUsuario")]
         public string NombreUsuario { get; set; }
-        [JsonProperty("apellidoUsuario")]
+        [JsonProperty("apellidosUsuario")]
         public string ApellidosUsuario { get; set; }
         [JsonProperty("emailUsuario")]
         public string EmailUsuario { get; set; }
